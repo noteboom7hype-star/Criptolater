@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Mebak Criptolater</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #111;
+      color: #eee;
+      text-align: center;
+      padding: 40px;
+    }
+    h1 { color: #0ff; }
+    textarea, input {
+      width: 80%;
+      padding: 10px;
+      margin: 10px 0;
+      background: #222;
+      color: #0ff;
+      border: 1px solid #0ff;
+      border-radius: 5px;
+    }
+    button {
+      padding: 10px 20px;
+      background: #0ff;
+      color: #111;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      margin: 5px;
+    }
+    button:hover { background: #0cc; }
+    .box { margin: 20px 0; }
+  </style>
+</head>
+<body>
+  <h1>Mebak Criptolater</h1>
+
+  <div class="box">
+    <label>Texto:</label><br>
+    <textarea id="texto" rows="4"></textarea><br>
+    <label>Key:</label><br>
+    <input type="text" id="keyInput">
+  </div>
+
+  <div class="box">
+    <label>Output/Input:</label><br>
+    <textarea id="output" rows="4"></textarea><br>
+    <button onclick="criptografar()">Cryptografh</button>
+    <button onclick="descriptografar()">Decrypt</button><br>
+    <label>Key para descriptografar:</label><br>
+    <input type="text" id="keyOutput">
+  </div>
+
+  <script>
+    function criptografar() {
+      let texto = document.getElementById("texto").value;
+      let chave = document.getElementById("keyInput").value;
+
+      if (!texto || !chave) {
+        alert("Digite o texto e a key!");
+        return;
+      }
+
+      // Combina texto + chave e codifica em Base64
+      let combinado = texto + "::" + chave;
+      let criptografado = btoa(combinado);
+
+      document.getElementById("output").value = criptografado;
+    }
+
+    function descriptografar() {
+      let criptografado = document.getElementById("output").value;
+      let chave = document.getElementById("keyOutput").value;
+
+      if (!criptografado || !chave) {
+        alert("Digite o texto criptografado e a key!");
+        return;
+      }
+
+      try {
+        let decodificado = atob(criptografado);
+        let partes = decodificado.split("::");
+
+        if (partes[1] === chave) {
+          alert("Texto original: " + partes[0]);
+        } else {
+          alert("Key incorreta!");
+        }
+      } catch (e) {
+        alert("Erro ao descriptografar. Verifique o texto e a key.");
+      }
+    }
+  </script>
+</body>
+</html>
