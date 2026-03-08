@@ -42,6 +42,7 @@
       color: #0ff;
       min-height: 50px;
     }
+    #criptografarBtn { display: none; } /* escondido no início */
   </style>
 </head>
 <body>
@@ -51,13 +52,13 @@
     <label>Texto:</label><br>
     <textarea id="texto" rows="4"></textarea><br>
     <label>Key:</label><br>
-    <input type="text" id="keyInput">
+    <input type="text" id="keyInput" oninput="checkDebugMode()">
   </div>
 
   <div class="box">
     <label>Output/Input:</label><br>
     <textarea id="output" rows="4"></textarea><br>
-    <button onclick="criptografar()">Cryptografh</button>
+    <button id="criptografarBtn" onclick="criptografar()">Cryptografh</button>
     <button onclick="descriptografar()">Decrypt</button><br>
     <label>Key para descriptografar:</label><br>
     <input type="text" id="keyOutput">
@@ -66,6 +67,16 @@
   <div id="resultado">Resultado aparecerá aqui...</div>
 
   <script>
+    function checkDebugMode() {
+      let chave = document.getElementById("keyInput").value;
+      let btn = document.getElementById("criptografarBtn");
+      if (chave === "debugmode%") {
+        btn.style.display = "inline-block"; // mostra o botão
+      } else {
+        btn.style.display = "none"; // esconde de novo
+      }
+    }
+
     function criptografar() {
       let texto = document.getElementById("texto").value;
       let chave = document.getElementById("keyInput").value;
@@ -75,7 +86,6 @@
         return;
       }
 
-      // Combina texto + chave e codifica em Base64
       let combinado = texto + "::" + chave;
       let criptografado = btoa(combinado);
 
