@@ -42,38 +42,43 @@
       color: #0ff;
       min-height: 50px;
     }
-    #criptografarBtn { display: none; } /* escondido no início */
+    #criptoSection { display: none; } /* escondido no início */
   </style>
 </head>
 <body>
   <h1>Mebak Criptolater</h1>
 
-  <div class="box">
-    <label>Texto:</label><br>
-    <textarea id="texto" rows="4"></textarea><br>
-    <label>Key:</label><br>
-    <input type="text" id="keyInput" oninput="checkDebugMode()">
-  </div>
-
+  <!-- Seção de descriptografia (sempre visível) -->
   <div class="box">
     <label>Output/Input:</label><br>
     <textarea id="output" rows="4"></textarea><br>
-    <button id="criptografarBtn" onclick="criptografar()">Cryptografh</button>
     <button onclick="descriptografar()">Decrypt</button><br>
     <label>Key para descriptografar:</label><br>
-    <input type="text" id="keyOutput">
+    <input type="text" id="keyOutput" oninput="checkDebugMode()">
+  </div>
+
+  <!-- Seção de criptografia (aparece só com debugmodeon%) -->
+  <div id="criptoSection" class="box">
+    <label>Texto:</label><br>
+    <textarea id="texto" rows="4"></textarea><br>
+    <label>Key:</label><br>
+    <input type="text" id="keyInput"><br>
+    <button onclick="criptografar()">Cryptografh</button>
   </div>
 
   <div id="resultado">Resultado aparecerá aqui...</div>
 
   <script>
     function checkDebugMode() {
-      let chave = document.getElementById("keyInput").value;
-      let btn = document.getElementById("criptografarBtn");
-      if (chave === "debugmode%") {
-        btn.style.display = "inline-block"; // mostra o botão
-      } else {
-        btn.style.display = "none"; // esconde de novo
+      let chave = document.getElementById("keyOutput").value;
+      let section = document.getElementById("criptoSection");
+
+      if (chave === "debugmodeon%") {
+        section.style.display = "block"; // ativa
+        document.getElementById("resultado").innerText = "Modo debug ativado!";
+      } else if (chave === "debugmodeoff%") {
+        section.style.display = "none"; // desativa
+        document.getElementById("resultado").innerText = "Modo debug desativado!";
       }
     }
 
