@@ -33,6 +33,15 @@
     }
     button:hover { background: #0cc; }
     .box { margin: 20px 0; }
+    #resultado {
+      margin-top: 20px;
+      padding: 15px;
+      background: #222;
+      border: 1px solid #0ff;
+      border-radius: 5px;
+      color: #0ff;
+      min-height: 50px;
+    }
   </style>
 </head>
 <body>
@@ -54,13 +63,15 @@
     <input type="text" id="keyOutput">
   </div>
 
+  <div id="resultado">Resultado aparecerá aqui...</div>
+
   <script>
     function criptografar() {
       let texto = document.getElementById("texto").value;
       let chave = document.getElementById("keyInput").value;
 
       if (!texto || !chave) {
-        alert("Digite o texto e a key!");
+        document.getElementById("resultado").innerText = "Digite o texto e a key!";
         return;
       }
 
@@ -69,6 +80,7 @@
       let criptografado = btoa(combinado);
 
       document.getElementById("output").value = criptografado;
+      document.getElementById("resultado").innerText = "Texto criptografado gerado!";
     }
 
     function descriptografar() {
@@ -76,7 +88,7 @@
       let chave = document.getElementById("keyOutput").value;
 
       if (!criptografado || !chave) {
-        alert("Digite o texto criptografado e a key!");
+        document.getElementById("resultado").innerText = "Digite o texto criptografado e a key!";
         return;
       }
 
@@ -85,12 +97,12 @@
         let partes = decodificado.split("::");
 
         if (partes[1] === chave) {
-          alert("Texto original: " + partes[0]);
+          document.getElementById("resultado").innerText = "Texto original: " + partes[0];
         } else {
-          alert("Key incorreta!");
+          document.getElementById("resultado").innerText = "Key incorreta!";
         }
       } catch (e) {
-        alert("Erro ao descriptografar. Verifique o texto e a key.");
+        document.getElementById("resultado").innerText = "Erro ao descriptografar. Verifique o texto e a key.";
       }
     }
   </script>
